@@ -1,27 +1,32 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   utils.c                                            :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: vockers <vockers@student.codam.nl>           +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/11/27 13:11:58 by vockers       #+#    #+#                 */
+/*   Updated: 2023/11/27 13:11:58 by vockers       ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "philo.h"
 
-size_t	ft_strlen(const char *str)
+/*
+ * @brief Get the current time in miliseconds
+ */
+long	get_time(void)
 {
-	size_t	len;
+	struct timeval	time;
 
-	len = 0;
-	while (*str)
-	{
-		len++;
-		str++;
-	}
-	return (len);
+	gettimeofday(&time, NULL);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
-size_t	ft_putstr(const char *str)
+int	ft_atoi(const char *str)
 {
-	return (write(STDOUT_FILENO, str, ft_strlen(str)));
-}
-
-int32_t	ft_atoi(const char *str)
-{
-	int32_t	num;
-	int		sign;
+	int	num;
+	int	sign;
 
 	sign = 1;
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
