@@ -12,9 +12,6 @@
 
 #include "philo.h"
 
-/*
- * @brief Get the current time in miliseconds
- */
 long	get_time(void)
 {
 	struct timeval	time;

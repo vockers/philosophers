@@ -45,7 +45,9 @@ int		init_data(t_data *data);
 int		philos_start(t_data *data);
 void	*philo_routine(void *arg);
 
-/* Utility functions */
+/*
+ * @brief Get the current time in miliseconds
+ */
 long	get_time(void);
 int		ft_atoi(const char *str);
 
