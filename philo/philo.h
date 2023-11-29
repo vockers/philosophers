@@ -25,10 +25,13 @@
 typedef struct	s_philo
 {
 	int				id;
-	long			ate_time;
+	long			last_eaten;
+	bool			alive;
+	bool			eating;
 	pthread_t		thread;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;
+	pthread_mutex_t	lock;
 	struct s_data	*data;
 }	t_philo;
 
@@ -50,7 +53,7 @@ int		init_data(t_data *data);
 int		philos_start(t_data *data);
 void	*philo_routine(void *arg);
 void	monitor_philos(t_data *data);
-int		is_dead(t_philo *philo);
+bool	is_dead(t_philo *philo);
 
 /*
  * @brief Get the current time in miliseconds

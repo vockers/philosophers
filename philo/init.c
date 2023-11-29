@@ -24,8 +24,11 @@ static int	init_philos(t_data *data)
 	while (i < data->philo_count)
 	{
 		philos[i].id = i + 1;
+		philos[i].alive = true;
+		philos[i].eating = false;
 		philos[i].fork_r = &(data->forks[i]);
 		philos[i].fork_l = &(data->forks[(i + 1) % data->philo_count]);
+		pthread_mutex_init(&(philos[i].lock), NULL);
 		philos[i].data = data;
 		i++;
 	}

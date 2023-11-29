@@ -12,26 +12,40 @@
 
 #include "philo.h"
 
-int	is_dead(t_philo *philo)
+bool	is_dead(t_philo *philo)
 {
-	if (get_time() - philo->ate_time > philo->data->time_to_die)
-		return (1);
+	pthread_mutex_lock(&(philo->lock));
+	if (philo->eating == false)
+	{
+		if (philo->alive == false)
+		{
+			pthread_mutex_unlock(&(philo->lock));
+			return (1);
+		}
+		if (get_time() - philo->last_eaten > philo->data->time_to_die)
+		{
+			philo->alive = false;
+			pthread_mutex_unlock(&(philo->lock));
+			return (1);
+		}
+	}
+	pthread_mutex_unlock(&(philo->lock));
 	return (0);
 }
 
-void	kill_philos(t_data *data)
+void kill_philos(t_data *data)
 {
 	int i;
 
 	i = 0;
 	while (i < data->philo_count)
 	{
-		data->philos[i].ate_time = 0;
+		data->philos[i].last_eaten = 0;
 		i++;
 	}
 }
 
-int	check_table(t_data *data)
+int check_table(t_data *data)
 {
 	int i;
 
@@ -54,6 +68,6 @@ void monitor_philos(t_data *data)
 	while (1)
 	{
 		if (!check_table(data))
-			return ;
+			return;
 	}
 }
