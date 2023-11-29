@@ -22,7 +22,7 @@ long	get_time(void)
 
 int	get_runtime(long start_time)
 {
-	return ((int)(get_time() - start_time) / 1000);
+	return ((int)(get_time() - start_time));
 }
 
 void	print_message(t_philo *philo, const char *msg)

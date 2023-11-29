@@ -27,7 +27,6 @@ typedef struct	s_philo
 	int				id;
 	long			last_eaten;
 	bool			alive;
-	bool			eating;
 	pthread_t		thread;
 	pthread_mutex_t	*fork_l;
 	pthread_mutex_t	*fork_r;

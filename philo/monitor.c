@@ -15,19 +15,16 @@
 bool	is_dead(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->lock));
-	if (philo->eating == false)
+	if (philo->alive == false)
 	{
-		if (philo->alive == false)
-		{
-			pthread_mutex_unlock(&(philo->lock));
-			return (1);
-		}
-		if (get_time() - philo->last_eaten > philo->data->time_to_die)
-		{
-			philo->alive = false;
-			pthread_mutex_unlock(&(philo->lock));
-			return (1);
-		}
+		pthread_mutex_unlock(&(philo->lock));
+		return (1);
+	}
+	if (get_time() - philo->last_eaten > philo->data->time_to_die)
+	{
+		philo->alive = false;
+		pthread_mutex_unlock(&(philo->lock));
+		return (1);
 	}
 	pthread_mutex_unlock(&(philo->lock));
 	return (0);
