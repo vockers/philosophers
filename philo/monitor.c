@@ -14,23 +14,33 @@
 
 int	is_dead(t_philo *philo)
 {
-	if ()
+	if (get_time() - philo->ate_time > philo->data->time_to_die)
+		return (1);
+	return (0);
 }
 
-void	monitor_philos(t_data *data)
+int	check_table(t_data *data)
 {
-	int	i;
+	int i;
 
+	i = 0;
+	while (i < data->philo_count)
+	{
+		if (is_dead(&(data->philos[i])))
+		{
+			printf("%d %d has died\n", get_runtime(data->start_time), $(data->philos[i]));
+			return (0);
+		}
+		i++;
+	}
+	return (1);
+}
+
+void monitor_philos(t_data *data)
+{
 	while (1)
 	{
-		i = 0;
-		while (i < data->philo_count)
-		{
-			if (is_dead(&(data->philos[i])))
-			{
-				printf("%d %d has died\n", get_runtime(data->start_time), $(data->philos[i]));
-			}
-			i++;
-		}
+		if (!check_table(data))
+			return ;
 	}
 }
