@@ -42,18 +42,22 @@ typedef struct	s_data
 	long			start_time;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
+	pthread_mutex_t	start_lock;
+	pthread_mutex_t	print_lock;
 }	t_data;
 
 int		init_data(t_data *data);
 int		philos_start(t_data *data);
 void	*philo_routine(void *arg);
 void	monitor_philos(t_data *data);
+int		is_dead(t_philo *philo);
 
 /*
  * @brief Get the current time in miliseconds
  */
 long	get_time(void);
 int		get_runtime(long start_time);
+void	print_message(t_philo *philo, const char *msg);
 int		ft_atoi(const char *str);
 
 #endif

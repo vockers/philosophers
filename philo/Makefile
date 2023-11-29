@@ -7,6 +7,7 @@ SOURCES	= \
 	routine.c \
 	start.c \
 	utils.c \
+	monitor.c \
 
 OBJS	= $(SOURCES:.c=.o)
 

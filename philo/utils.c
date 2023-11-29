@@ -25,6 +25,18 @@ int	get_runtime(long start_time)
 	return ((int)(get_time() - start_time) / 1000);
 }
 
+void	print_message(t_philo *philo, const char *msg)
+{
+	pthread_mutex_lock(&(philo->data->print_lock));
+	if (is_dead(philo))
+	{
+		pthread_mutex_unlock(&(philo->data->print_lock));
+		return ;
+	}
+	printf("%d %d %s\n", get_runtime(philo->data->start_time), philo->id, msg);
+	pthread_mutex_unlock(&(philo->data->print_lock));
+}
+
 int	ft_atoi(const char *str)
 {
 	int	num;

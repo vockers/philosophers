@@ -19,6 +19,18 @@ int	is_dead(t_philo *philo)
 	return (0);
 }
 
+void	kill_philos(t_data *data)
+{
+	int i;
+
+	i = 0;
+	while (i < data->philo_count)
+	{
+		data->philos[i].ate_time = 0;
+		i++;
+	}
+}
+
 int	check_table(t_data *data)
 {
 	int i;
@@ -28,8 +40,9 @@ int	check_table(t_data *data)
 	{
 		if (is_dead(&(data->philos[i])))
 		{
-			printf("%d %d has died\n", get_runtime(data->start_time), $(data->philos[i]));
-			return (0);
+			kill_philos(data);
+			printf("%d %d has died\n", get_runtime(data->start_time), data->philos[i].id);
+			exit(0);
 		}
 		i++;
 	}

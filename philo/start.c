@@ -30,14 +30,21 @@ int	philos_start(t_data *data)
 {
 	int	i;
 
-	data->start_time = get_time();
+	if (pthread_mutex_init(&(data->start_lock), NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&(data->print_lock), NULL) != 0)
+		return (0);
+	pthread_mutex_lock(&(data->start_lock));
 	i = 0;
 	while (i < data->philo_count)
 	{
 		if (pthread_create(&(data->philos[i].thread), NULL, &philo_routine, &(data->philos[i])) != 0)
 			return (0);
+		data->philos[i].ate_time = get_time();
 		i++;
 	}
-	// monitor_philos(data);
+	data->start_time = get_time();
+	pthread_mutex_unlock(&(data->start_lock));
+	monitor_philos(data);
 	return (join_threads(data));
 }
