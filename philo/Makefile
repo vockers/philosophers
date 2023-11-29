@@ -1,10 +1,11 @@
 NAME	= philo
+CFLAGS	= -fsanitize=address
 
 SOURCES	= \
 	main.c \
 	init.c \
 	routine.c \
-	start .c \
+	start.c \
 	utils.c \
 
 OBJS	= $(SOURCES:.c=.o)
@@ -12,7 +13,7 @@ OBJS	= $(SOURCES:.c=.o)
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
 clean:
 	rm -f $(OBJS)

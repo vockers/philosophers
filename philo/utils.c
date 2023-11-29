@@ -20,6 +20,11 @@ long	get_time(void)
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
+int	get_runtime(long start_time)
+{
+	return ((int)(get_time() - start_time) / 1000);
+}
+
 int	ft_atoi(const char *str)
 {
 	int	num;

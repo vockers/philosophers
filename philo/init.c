@@ -24,12 +24,13 @@ static int	init_philos(t_data *data)
 	while (i < data->philo_count)
 	{
 		philos[i].id = i + 1;
-		philos[i].fork_l = data->forks[i];
-		philos[i].fork_r = data->forks[(i + 1) % data->philo_count];
+		philos[i].fork_r = &(data->forks[i]);
+		philos[i].fork_l = &(data->forks[(i + 1) % data->philo_count]);
+		philos[i].data = data;
 		i++;
 	}
 	data->philos = philos;
-	return (0);
+	return (1);
 }
 
 static int	init_forks(t_data *data)
@@ -60,6 +61,8 @@ int	init_data(t_data *data)
 	int	i;
 
 	if (!init_forks(data))
+		return (0);
+	if (!init_philos(data))
 		return (0);
 	return (1);
 }
