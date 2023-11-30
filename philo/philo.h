@@ -25,6 +25,7 @@
 typedef struct	s_philo
 {
 	int				id;
+	int				num_eaten;
 	long			last_eaten;
 	bool			alive;
 	pthread_t		thread;
@@ -59,6 +60,7 @@ bool	is_dead(t_philo *philo);
  */
 long	get_time(void);
 int		get_runtime(long start_time);
+void	ft_sleep(int todo);
 void	print_message(t_philo *philo, const char *msg);
 int		ft_atoi(const char *str);
 

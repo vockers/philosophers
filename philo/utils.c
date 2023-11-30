@@ -37,6 +37,15 @@ void	print_message(t_philo *philo, const char *msg)
 	pthread_mutex_unlock(&(philo->data->print_lock));
 }
 
+void	ft_sleep(int todo)
+{
+	long	time;
+
+	time = get_time();
+	while (get_time() - time < todo)
+		usleep(250);
+}
+
 int	ft_atoi(const char *str)
 {
 	int	num;
