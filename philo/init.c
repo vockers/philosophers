@@ -17,10 +17,10 @@ static int	init_philos(t_data *data)
 	int		i;
 	t_philo	*philos;
 
-	i = 0;
 	philos = malloc(data->philo_count * sizeof(t_philo));
 	if (philos == NULL)
 		return (0);
+	i = 0;
 	while (i < data->philo_count)
 	{
 		philos[i].id = i + 1;
@@ -28,7 +28,13 @@ static int	init_philos(t_data *data)
 		philos[i].alive = true;
 		philos[i].fork_r = &(data->forks[i]);
 		philos[i].fork_l = &(data->forks[(i + 1) % data->philo_count]);
-		pthread_mutex_init(&(philos[i].lock), NULL);
+		if (pthread_mutex_init(&(philos[i].lock), NULL) != 0)
+		{
+			while (i-- > 0)
+				pthread_mutex_destroy(&(philos[i].lock));
+			free(philos);
+			return (0);
+		}
 		philos[i].data = data;
 		i++;
 	}
@@ -51,6 +57,7 @@ static int	init_forks(t_data *data)
 		{
 			while (i-- > 0)
 				pthread_mutex_destroy(&(forks[i]));
+			free(forks);
 			return (0);
 		}
 		i++;
@@ -61,11 +68,22 @@ static int	init_forks(t_data *data)
 
 int	init_data(t_data *data)
 {
-	int	i;
-
+	if (pthread_mutex_init(&(data->start_lock), NULL) != 0)
+		return (0);
+	if (pthread_mutex_init(&(data->print_lock), NULL) != 0)
+		return (pthread_mutex_destroy(&(data->start_lock)), 0);
 	if (!init_forks(data))
+	{
+		pthread_mutex_destroy(&(data->start_lock));
+		pthread_mutex_destroy(&(data->print_lock));
 		return (0);
+	}
 	if (!init_philos(data))
+	{
+		clean_up_forks(data->forks, data->philo_count);
+		pthread_mutex_destroy(&(data->start_lock));
+		pthread_mutex_destroy(&(data->print_lock));
 		return (0);
+	}
 	return (1);
 }

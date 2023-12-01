@@ -55,6 +55,7 @@ void	*philo_routine(void *arg);
 void	monitor_philos(t_data *data);
 bool	is_dead(t_philo *philo);
 void	clean_up(t_data *data);
+void	clean_up_forks(pthread_mutex_t *forks, int num);
 
 /*
  * @brief Get the current time in miliseconds

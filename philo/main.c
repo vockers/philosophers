@@ -20,6 +20,7 @@ static int	parse_args(t_data *data, int argc, char **argv)
 			"<time_to_die> <time_to_eat> <time_to_sleep>");
 		return (0);
 	}
+	memset(data, 0, sizeof(t_data));
 	data->philo_count = ft_atoi(argv[1]);
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
@@ -39,7 +40,7 @@ int main(int argc, char *argv[])
 	if (!init_data(&data))
 		return (2);
 	if (!philos_start(&data))
-		return (3);
+		return (clean_up(&data), 3);
 	clean_up(&data);
 	return (0);
 }

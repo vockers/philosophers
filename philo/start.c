@@ -30,10 +30,6 @@ int	philos_start(t_data *data)
 {
 	int	i;
 
-	if (pthread_mutex_init(&(data->start_lock), NULL) != 0)
-		return (0);
-	if (pthread_mutex_init(&(data->print_lock), NULL) != 0)
-		return (0);
 	pthread_mutex_lock(&(data->start_lock));
 	i = 0;
 	while (i < data->philo_count)
