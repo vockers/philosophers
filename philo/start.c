@@ -12,16 +12,14 @@
 
 #include "philo.h"
 
-static int	join_threads(t_data *data)
+static int	join_threads(t_data *data, int i)
 {
-	int	i;
-
-	i = 0;
-	while (i < data->philo_count)
+	if (i != data->philo_count)
+		pthread_mutex_unlock(&(data->start_lock));
+	while (i-- > 0)
 	{
 		if (pthread_join(data->philos[i].thread, NULL) != 0)
 			return (0);
-		i++;
 	}
 	return (1);
 }
@@ -35,12 +33,12 @@ int	philos_start(t_data *data)
 	while (i < data->philo_count)
 	{
 		if (pthread_create(&(data->philos[i].thread), NULL, &philo_routine, &(data->philos[i])) != 0)
-			return (0);
+			return (join_threads(data, i), 0);
 		data->philos[i].last_eaten = get_time();
 		i++;
 	}
 	data->start_time = get_time();
 	pthread_mutex_unlock(&(data->start_lock));
 	monitor_philos(data);
-	return (join_threads(data));
+	return (join_threads(data, data->philo_count));
 }
