@@ -2,6 +2,7 @@ NAME	= philo
 CFLAGS	= -fsanitize=address
 
 SOURCES	= \
+	args.c \
 	cleanup.c \
 	main.c \
 	init.c \

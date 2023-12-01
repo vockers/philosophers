@@ -49,6 +49,7 @@ typedef struct	s_data
 	pthread_mutex_t	print_lock;
 }	t_data;
 
+int		parse_args(t_data *data, int argc, char **argv);
 int		init_data(t_data *data);
 int		philos_start(t_data *data);
 void	*philo_routine(void *arg);
