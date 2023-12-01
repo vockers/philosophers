@@ -22,7 +22,7 @@
 # include <pthread.h>
 # include <sys/time.h>
 
-typedef struct	s_philo
+typedef struct s_philo
 {
 	int				id;
 	int				num_eaten;
@@ -35,7 +35,7 @@ typedef struct	s_philo
 	struct s_data	*data;
 }	t_philo;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	int				philo_count;
 	int				time_to_die;

@@ -32,8 +32,7 @@ static int	init_philos(t_data *data)
 		{
 			while (i-- > 0)
 				pthread_mutex_destroy(&(philos[i].lock));
-			free(philos);
-			return (0);
+			return (free(philos), 0);
 		}
 		philos[i].data = data;
 		i++;
@@ -47,7 +46,7 @@ static int	init_forks(t_data *data)
 	int				i;
 	pthread_mutex_t	*forks;
 
-	forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * data->philo_count);
+	forks = malloc(sizeof(pthread_mutex_t) * data->philo_count);
 	if (forks == NULL)
 		return (0);
 	i = 0;
@@ -57,8 +56,7 @@ static int	init_forks(t_data *data)
 		{
 			while (i-- > 0)
 				pthread_mutex_destroy(&(forks[i]));
-			free(forks);
-			return (0);
+			return (free(forks), 0);
 		}
 		i++;
 	}

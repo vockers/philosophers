@@ -42,23 +42,23 @@ bool	is_done(t_philo *philo)
 	return (false);
 }
 
-void kill_philos(t_data *data)
+void	kill_philos(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->philo_count)
-	{		
+	{
 		pthread_mutex_lock(&(data->philos[i].lock));
 		data->philos[i].alive = false;
-		pthread_mutex_unlock(&(data->philos[i].lock));		
+		pthread_mutex_unlock(&(data->philos[i].lock));
 		i++;
 	}
 }
 
-int check_table(t_data *data)
+int	check_table(t_data *data)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < data->philo_count)
@@ -66,7 +66,8 @@ int check_table(t_data *data)
 		if (is_dead(&(data->philos[i])))
 		{
 			kill_philos(data);
-			printf("%d %d has died\n", get_runtime(data->start_time), data->philos[i].id);
+			printf("%d %d has died\n", \
+				get_runtime(data->start_time), data->philos[i].id);
 			return (0);
 		}
 		i++;
@@ -89,7 +90,7 @@ bool	check_table_done(t_data *data)
 	return (true);
 }
 
-void monitor_philos(t_data *data)
+void	monitor_philos(t_data *data)
 {
 	while (1)
 	{
