@@ -33,7 +33,7 @@ bool	is_dead(t_philo *philo)
 bool	is_done(t_philo *philo)
 {
 	pthread_mutex_lock(&(philo->lock));
-	if (philo->num_eaten == philo->data->min_eat)
+	if (philo->num_eaten >= philo->data->min_eat)
 	{
 		pthread_mutex_unlock(&(philo->lock));
 		return (true);
@@ -85,7 +85,8 @@ bool	check_table_done(t_data *data)
 			return (false);
 		i++;
 	}
-	exit(0);
+	kill_philos(data);
+	return (true);
 }
 
 void monitor_philos(t_data *data)
