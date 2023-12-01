@@ -30,6 +30,12 @@ int	take_forks(t_philo *philo)
 		return (0);
 	pthread_mutex_lock(philo->fork_r);
 	print_message(philo, "has taken a fork");
+	if (philo->data->philo_count == 1)
+	{
+		pthread_mutex_unlock(philo->fork_r);
+		ft_sleep(philo->data->time_to_die);
+		return (0);
+	}
 	pthread_mutex_lock(philo->fork_l);
 	print_message(philo, "has taken a fork");
 	return (1);
@@ -42,8 +48,8 @@ void	*philo_routine(void *arg)
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&(philo->data->start_lock));
 	pthread_mutex_unlock(&(philo->data->start_lock));
-	philo->last_eaten = get_time();
-	if (philo->id % 2 == 1)
+	philo->last_eaten = philo->data->start_time;
+	if (philo->id % 2 == 0)
 		ft_sleep(10);
 	while (1)
 	{
