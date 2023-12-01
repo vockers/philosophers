@@ -43,6 +43,7 @@ typedef struct	s_data
 	int				time_to_sleep;
 	int				min_eat;
 	long			start_time;
+	bool			start;
 	t_philo			*philos;
 	pthread_mutex_t	*forks;
 	pthread_mutex_t	start_lock;

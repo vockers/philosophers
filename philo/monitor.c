@@ -20,7 +20,7 @@ bool	is_dead(t_philo *philo)
 		pthread_mutex_unlock(&(philo->lock));
 		return (true);
 	}
-	if (get_time() - philo->last_eaten > philo->data->time_to_die)
+	if (get_time() - philo->last_eaten >= philo->data->time_to_die)
 	{
 		philo->alive = false;
 		pthread_mutex_unlock(&(philo->lock));

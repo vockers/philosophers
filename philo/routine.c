@@ -47,6 +47,11 @@ void	*philo_routine(void *arg)
 
 	philo = (t_philo *)arg;
 	pthread_mutex_lock(&(philo->data->start_lock));
+	if (philo->data->start == false)
+	{
+		pthread_mutex_unlock(&(philo->data->start_lock));
+		return (NULL);
+	}
 	pthread_mutex_unlock(&(philo->data->start_lock));
 	philo->last_eaten = philo->data->start_time;
 	if (philo->id % 2 == 0)

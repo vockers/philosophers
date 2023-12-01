@@ -34,6 +34,7 @@ int	philos_start(t_data *data)
 		i++;
 	}
 	data->start_time = get_time();
+	data->start = true;
 	pthread_mutex_unlock(&(data->start_lock));
 	monitor_philos(data);
 	join_threads(data, data->philo_count);
