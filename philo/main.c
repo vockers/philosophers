@@ -40,5 +40,6 @@ int main(int argc, char *argv[])
 		return (2);
 	if (!philos_start(&data))
 		return (3);
+	clean_up(&data);
 	return (0);
 }

@@ -54,8 +54,12 @@ void	*philo_routine(void *arg)
 		eat(philo);
 		pthread_mutex_unlock(philo->fork_l);
 		pthread_mutex_unlock(philo->fork_r);
+		if (is_dead(philo))
+			return (NULL);
 		print_message(philo, "is sleeping");
 		ft_sleep(philo->data->time_to_sleep);
+		if (is_dead(philo))
+			return (NULL);
 		print_message(philo, "is thinking");
 	}
 }

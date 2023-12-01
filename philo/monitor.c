@@ -48,8 +48,10 @@ void kill_philos(t_data *data)
 
 	i = 0;
 	while (i < data->philo_count)
-	{
-		data->philos[i].last_eaten = 0;
+	{		
+		pthread_mutex_lock(&(data->philos[i].lock));
+		data->philos[i].alive = false;
+		pthread_mutex_unlock(&(data->philos[i].lock));		
 		i++;
 	}
 }
@@ -65,7 +67,7 @@ int check_table(t_data *data)
 		{
 			kill_philos(data);
 			printf("%d %d has died\n", get_runtime(data->start_time), data->philos[i].id);
-			exit(0);
+			return (0);
 		}
 		i++;
 	}
