@@ -48,25 +48,20 @@ void	ft_msleep(int msec)
 
 int	ft_atoi(const char *str)
 {
-	int	num;
-	int	sign;
+	long	res;
 
-	sign = 1;
 	while ((*str >= 9 && *str <= 13) || *str == ' ')
-	{
 		str++;
-	}
-	if (*str == '-' || *str == '+')
-	{
-		if (*str == '-')
-			sign = -1;
-		str++;
-	}
-	num = 0;
+	res = 0;
 	while (*str >= '0' && *str <= '9')
 	{
-		num = num * 10 + (*str - '0');
+		res = res * 10 + (*str - '0');
+		if (res >= INT_MAX)
+		{
+			res = INT_MAX;
+			break ;
+		}
 		str++;
 	}
-	return (num * sign);
+	return ((int)res);
 }

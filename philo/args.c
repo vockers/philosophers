@@ -38,7 +38,7 @@ static int	check_args(int argc, char **argv)
 	{
 		if (!valid_arg(argv[i]))
 		{
-			printf("Invalid arguments\n");
+			printf("Error: argument is not a valid positive number\n");
 			return (0);
 		}
 		i++;
@@ -52,6 +52,11 @@ int	parse_args(t_data *data, int argc, char **argv)
 		return (0);
 	memset(data, 0, sizeof(t_data));
 	data->philo_count = ft_atoi(argv[1]);
+	if (data->philo_count <= 0)
+	{
+		printf("Error: minimum number of philosophers must 1\n");
+		return (0);
+	}
 	data->time_to_die = ft_atoi(argv[2]);
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
