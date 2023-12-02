@@ -54,7 +54,7 @@ int	parse_args(t_data *data, int argc, char **argv)
 	data->philo_count = ft_atoi(argv[1]);
 	if (data->philo_count <= 0)
 	{
-		printf("Error: minimum number of philosophers must 1\n");
+		printf("Error: minimum number of philosophers must be 1\n");
 		return (0);
 	}
 	data->time_to_die = ft_atoi(argv[2]);
