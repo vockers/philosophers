@@ -12,7 +12,7 @@
 
 #include "philo.h"
 
-void	eat(t_philo *philo)
+static void	eat(t_philo *philo)
 {
 	if (is_dead(philo))
 		return ;
@@ -21,10 +21,10 @@ void	eat(t_philo *philo)
 	philo->num_eaten++;
 	philo->last_eaten = get_time();
 	pthread_mutex_unlock(&(philo->lock));
-	ft_sleep(philo->data->time_to_eat);
+	ft_msleep(philo->data->time_to_eat);
 }
 
-int	take_forks(t_philo *philo)
+static int	take_forks(t_philo *philo)
 {
 	if (is_dead(philo))
 		return (0);
@@ -33,7 +33,7 @@ int	take_forks(t_philo *philo)
 	if (philo->data->philo_count == 1)
 	{
 		pthread_mutex_unlock(philo->fork_r);
-		ft_sleep(philo->data->time_to_die);
+		ft_msleep(philo->data->time_to_die);
 		return (0);
 	}
 	pthread_mutex_lock(philo->fork_l);
@@ -41,7 +41,28 @@ int	take_forks(t_philo *philo)
 	return (1);
 }
 
-void	*philo_routine(void *arg)
+static void	philo_routine(t_philo *philo)
+{
+	while (1)
+	{
+		if (is_dead(philo))
+			return ;
+		if (!take_forks(philo))
+			return ;
+		eat(philo);
+		pthread_mutex_unlock(philo->fork_l);
+		pthread_mutex_unlock(philo->fork_r);
+		if (is_dead(philo))
+			return ;
+		print_message(philo, "is sleeping");
+		ft_msleep(philo->data->time_to_sleep);
+		if (is_dead(philo))
+			return ;
+		print_message(philo, "is thinking");
+	}
+}
+
+void	*philo_start(void *arg)
 {
 	t_philo	*philo;
 
@@ -55,22 +76,6 @@ void	*philo_routine(void *arg)
 	pthread_mutex_unlock(&(philo->data->start_lock));
 	philo->last_eaten = philo->data->start_time;
 	if (philo->id % 2 == 0)
-		ft_sleep(10);
-	while (1)
-	{
-		if (is_dead(philo))
-			return (NULL);
-		if (!take_forks(philo))
-			return (NULL);
-		eat(philo);
-		pthread_mutex_unlock(philo->fork_l);
-		pthread_mutex_unlock(philo->fork_r);
-		if (is_dead(philo))
-			return (NULL);
-		print_message(philo, "is sleeping");
-		ft_sleep(philo->data->time_to_sleep);
-		if (is_dead(philo))
-			return (NULL);
-		print_message(philo, "is thinking");
-	}
+		ft_msleep(10);
+	philo_routine(philo);
 }

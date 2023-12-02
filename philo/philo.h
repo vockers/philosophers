@@ -53,7 +53,7 @@ typedef struct s_data
 int		parse_args(t_data *data, int argc, char **argv);
 int		init_data(t_data *data);
 int		philos_start(t_data *data);
-void	*philo_routine(void *arg);
+void	*philo_start(void *arg);
 void	monitor_philos(t_data *data);
 bool	is_dead(t_philo *philo);
 void	clean_up(t_data *data);
@@ -64,7 +64,7 @@ void	clean_up_forks(pthread_mutex_t *forks, int num);
  */
 long	get_time(void);
 int		get_runtime(long start_time);
-void	ft_sleep(int todo);
+void	ft_msleep(int msec);
 void	print_message(t_philo *philo, const char *msg);
 int		ft_atoi(const char *str);
 

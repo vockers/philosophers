@@ -29,7 +29,7 @@ int	philos_start(t_data *data)
 	while (i < data->philo_count)
 	{
 		if (pthread_create(&(data->philos[i].thread), \
-			NULL, &philo_routine, &(data->philos[i])) != 0)
+			NULL, &philo_start, &(data->philos[i])) != 0)
 			return (join_threads(data, i), 0);
 		data->philos[i].last_eaten = get_time();
 		i++;

@@ -30,19 +30,7 @@ bool	is_dead(t_philo *philo)
 	return (false);
 }
 
-bool	is_done(t_philo *philo)
-{
-	pthread_mutex_lock(&(philo->lock));
-	if (philo->num_eaten >= philo->data->min_eat)
-	{
-		pthread_mutex_unlock(&(philo->lock));
-		return (true);
-	}
-	pthread_mutex_unlock(&(philo->lock));
-	return (false);
-}
-
-void	kill_philos(t_data *data)
+static void	kill_all(t_data *data)
 {
 	int	i;
 
@@ -56,7 +44,7 @@ void	kill_philos(t_data *data)
 	}
 }
 
-int	check_table(t_data *data)
+static bool	is_everyone_alive(t_data *data)
 {
 	int	i;
 
@@ -65,28 +53,33 @@ int	check_table(t_data *data)
 	{
 		if (is_dead(&(data->philos[i])))
 		{
-			kill_philos(data);
+			kill_all(data);
 			printf("%d %d has died\n", \
 				get_runtime(data->start_time), data->philos[i].id);
-			return (0);
+			return (false);
 		}
 		i++;
 	}
-	return (1);
+	return (true);
 }
 
-bool	check_table_done(t_data *data)
+static bool	is_everyone_done(t_data *data)
 {
 	int	i;
 
 	i = 0;
 	while (i < data->philo_count)
 	{
-		if (!is_done(&(data->philos[i])))
+		pthread_mutex_lock(&(data->philos[i].lock));
+		if (data->philos[i].num_eaten < data->min_eat)
+		{
+			pthread_mutex_unlock(&(data->philos[i].lock));
 			return (false);
+		}
+		pthread_mutex_unlock(&(data->philos[i].lock));
 		i++;
 	}
-	kill_philos(data);
+	kill_all(data);
 	return (true);
 }
 
@@ -94,9 +87,9 @@ void	monitor_philos(t_data *data)
 {
 	while (1)
 	{
-		if (!check_table(data))
+		if (!is_everyone_alive(data))
 			return ;
-		if (data->min_eat > 0 && check_table_done(data))
+		if (data->min_eat > 0 && is_everyone_done(data))
 			return ;
 	}
 }
