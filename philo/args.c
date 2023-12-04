@@ -30,7 +30,7 @@ static int	check_args(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 	{
 		printf("usage: ./philo <number_of_philosophers> "
-			"<time_to_die> <time_to_eat> <time_to_sleep>");
+			"<time_to_die> <time_to_eat> <time_to_sleep>\n");
 		return (0);
 	}
 	i = 1;
