@@ -14,6 +14,8 @@
 
 static bool	valid_arg(char *arg)
 {
+	if (*arg == '\0')
+		return (false);
 	while (*arg)
 	{
 		if (!(*arg >= '0' && *arg <= '9'))
