@@ -26,17 +26,27 @@ static void	eat(t_philo *philo)
 
 static int	take_forks(t_philo *philo)
 {
+	pthread_mutex_t	*first_fork;
+	pthread_mutex_t	*second_fork;
+
 	if (is_dead(philo))
 		return (0);
-	pthread_mutex_lock(philo->fork_r);
+	first_fork = philo->fork_l;
+	second_fork = philo->fork_r;
+	if (philo->id % 2 == 0)
+	{
+		first_fork = philo->fork_r;
+		second_fork = philo->fork_l;
+	}
+	pthread_mutex_lock(first_fork);
 	print_message(philo, "has taken a fork");
 	if (philo->data->philo_count == 1)
 	{
-		pthread_mutex_unlock(philo->fork_r);
+		pthread_mutex_unlock(first_fork);
 		ft_msleep(philo->data->time_to_die);
 		return (0);
 	}
-	pthread_mutex_lock(philo->fork_l);
+	pthread_mutex_lock(second_fork);
 	print_message(philo, "has taken a fork");
 	return (1);
 }
@@ -74,8 +84,6 @@ void	*philo_start(void *arg)
 		return (NULL);
 	}
 	pthread_mutex_unlock(&(philo->data->start_lock));
-	if (philo->id % 2 == 0)
-		ft_msleep(10);
 	philo_routine(philo);
 	return (NULL);
 }
