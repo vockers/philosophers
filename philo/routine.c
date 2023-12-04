@@ -78,4 +78,5 @@ void	*philo_start(void *arg)
 	if (philo->id % 2 == 0)
 		ft_msleep(10);
 	philo_routine(philo);
+	return (NULL);
 }

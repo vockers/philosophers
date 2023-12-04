@@ -1,5 +1,5 @@
 NAME	= philo
-CFLAGS	= -fsanitize=address
+CFLAGS	= -Wall -Wextra -Werror
 
 SOURCES	= \
 	args.c \
