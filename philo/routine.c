@@ -74,7 +74,6 @@ void	*philo_start(void *arg)
 		return (NULL);
 	}
 	pthread_mutex_unlock(&(philo->data->start_lock));
-	philo->last_eaten = philo->data->start_time;
 	if (philo->id % 2 == 0)
 		ft_msleep(10);
 	philo_routine(philo);

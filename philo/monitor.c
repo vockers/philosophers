@@ -85,6 +85,7 @@ static bool	is_everyone_done(t_data *data)
 
 void	monitor_philos(t_data *data)
 {
+	usleep(data->philo_count * 1000);
 	while (1)
 	{
 		if (!is_everyone_alive(data))
