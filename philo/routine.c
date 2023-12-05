@@ -12,6 +12,24 @@
 
 #include "philo.h"
 
+void	philo_wait(t_philo *philo, int msec)
+{
+	long	time;
+
+	time = get_time();
+	while (get_time() - time < msec)
+	{
+		if (philo->alive == false)
+			return ;
+		if (get_time() - philo->last_eaten >= philo->data->time_to_die)
+		{
+			philo->alive = false;
+			return ;
+		}
+		usleep(250);
+	}
+}
+
 static void	eat(t_philo *philo)
 {
 	if (is_dead(philo))
@@ -21,7 +39,7 @@ static void	eat(t_philo *philo)
 	philo->num_eaten++;
 	philo->last_eaten = get_time();
 	pthread_mutex_unlock(&(philo->lock));
-	ft_msleep(philo->data->time_to_eat);
+	philo_wait(philo, philo->data->time_to_eat);
 }
 
 static int	take_forks(t_philo *philo)
@@ -55,7 +73,7 @@ static void	philo_routine(t_philo *philo)
 		if (is_dead(philo))
 			return ;
 		print_message(philo, "is sleeping");
-		ft_msleep(philo->data->time_to_sleep);
+		philo_wait(philo, philo->data->time_to_sleep);
 		if (is_dead(philo))
 			return ;
 		print_message(philo, "is thinking");
