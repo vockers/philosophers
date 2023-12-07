@@ -56,11 +56,8 @@ int	ft_atoi(const char *str)
 	while (*str >= '0' && *str <= '9')
 	{
 		res = res * 10 + (*str - '0');
-		if (res >= INT_MAX)
-		{
-			res = INT_MAX;
-			break ;
-		}
+		if (res > INT_MAX)
+			return (-1);
 		str++;
 	}
 	return ((int)res);

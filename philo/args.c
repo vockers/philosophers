@@ -64,5 +64,11 @@ int	parse_args(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->min_eat = ft_atoi(argv[5]);
+	if (data->time_to_die == -1 || data->time_to_eat == -1 || \
+		data->time_to_sleep == -1 || data->min_eat == -1)
+	{
+		printf("Error: argument overflow detected\n");
+		return (0);
+	}
 	return (1);
 }
