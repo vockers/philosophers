@@ -17,15 +17,8 @@ void	philo_wait(t_philo *philo, int msec)
 	long	time;
 
 	time = get_time();
-	while (get_time() - time < msec)
+	while (get_time() - time < msec && !is_dead(philo))
 	{
-		if (philo->alive == false)
-			return ;
-		if (get_time() - philo->last_eaten >= philo->data->time_to_die)
-		{
-			philo->alive = false;
-			return ;
-		}
 		usleep(250);
 	}
 }
@@ -93,7 +86,7 @@ void	*philo_start(void *arg)
 	}
 	pthread_mutex_unlock(&(philo->data->start_lock));
 	if (philo->id % 2 == 0)
-		ft_msleep(10);
+		usleep((philo->data->time_to_die * 1000) / 8);
 	philo_routine(philo);
 	return (NULL);
 }
