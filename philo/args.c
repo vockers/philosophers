@@ -31,8 +31,9 @@ static int	check_args(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		printf("usage: ./philo <number_of_philosophers> "
-			"<time_to_die> <time_to_eat> <time_to_sleep>\n");
+		printf("usage: %s <number_of_philosophers> "
+			"<time_to_die> <time_to_eat> <time_to_sleep> "
+			"[min_number_of_times_each_philosopher_must_eat]\n", argv[0]);
 		return (0);
 	}
 	i = 1;
@@ -64,8 +65,9 @@ int	parse_args(t_data *data, int argc, char **argv)
 	data->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		data->min_eat = ft_atoi(argv[5]);
-	if (data->time_to_die == -1 || data->time_to_eat == -1 || \
-		data->time_to_sleep == -1 || data->min_eat == -1)
+	if (data->philo_count == -1 || data->time_to_die == -1 || \
+		data->time_to_eat == -1 || data->time_to_sleep == -1 || \
+		data->min_eat == -1)
 	{
 		printf("Error: argument overflow detected\n");
 		return (0);
