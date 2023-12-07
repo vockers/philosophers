@@ -86,7 +86,7 @@ void	*philo_start(void *arg)
 	}
 	pthread_mutex_unlock(&(philo->data->start_lock));
 	if (philo->id % 2 == 0)
-		usleep((philo->data->time_to_die * 1000) / 8);
+		usleep(10000);
 	philo_routine(philo);
 	return (NULL);
 }
