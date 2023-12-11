@@ -39,6 +39,13 @@ static int	take_forks(t_philo *philo)
 {
 	if (is_dead(philo))
 		return (0);
+	if (philo->num_eaten != 0)
+	{
+		if (philo->data->time_to_die - \
+			(get_time() - philo->last_eaten) > philo->data->time_to_eat)
+			ft_msleep(philo->data->time_to_die - \
+				(get_time() - philo->last_eaten) - philo->data->time_to_eat);
+	}
 	pthread_mutex_lock(philo->fork_r);
 	print_message(philo, "has taken a fork");
 	if (philo->data->philo_count == 1)

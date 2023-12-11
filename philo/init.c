@@ -12,6 +12,20 @@
 
 #include "philo.h"
 
+static void	select_forks(t_data *data, t_philo *philo)
+{
+	if (philo->id % 2 == 0)
+	{
+		philo->fork_r = &(data->forks[philo->id - 1]);
+		philo->fork_l = &(data->forks[(philo->id) % data->philo_count]);
+	}
+	else
+	{
+		philo->fork_r = &(data->forks[(philo->id) % data->philo_count]);
+		philo->fork_l = &(data->forks[philo->id - 1]);
+	}
+}
+
 static int	init_philos(t_data *data)
 {
 	int		i;
@@ -26,16 +40,7 @@ static int	init_philos(t_data *data)
 		philos[i].id = i + 1;
 		philos[i].num_eaten = 0;
 		philos[i].alive = true;
-		if (i % 2 == 0)
-		{
-			philos[i].fork_r = &(data->forks[i]);
-			philos[i].fork_l = &(data->forks[(i + 1) % data->philo_count]);
-		}
-		else
-		{
-			philos[i].fork_r = &(data->forks[(i + 1) % data->philo_count]);
-			philos[i].fork_l = &(data->forks[i]);
-		}
+		select_forks(data, &(philos[i]));
 		if (pthread_mutex_init(&(philos[i].lock), NULL) != 0)
 		{
 			while (i-- > 0)
