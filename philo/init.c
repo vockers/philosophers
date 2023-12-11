@@ -26,8 +26,16 @@ static int	init_philos(t_data *data)
 		philos[i].id = i + 1;
 		philos[i].num_eaten = 0;
 		philos[i].alive = true;
-		philos[i].fork_r = &(data->forks[i]);
-		philos[i].fork_l = &(data->forks[(i + 1) % data->philo_count]);
+		if (i % 2 == 0)
+		{
+			philos[i].fork_r = &(data->forks[i]);
+			philos[i].fork_l = &(data->forks[(i + 1) % data->philo_count]);
+		}
+		else
+		{
+			philos[i].fork_r = &(data->forks[(i + 1) % data->philo_count]);
+			philos[i].fork_l = &(data->forks[i]);
+		}
 		if (pthread_mutex_init(&(philos[i].lock), NULL) != 0)
 		{
 			while (i-- > 0)
