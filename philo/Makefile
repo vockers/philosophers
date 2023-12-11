@@ -1,5 +1,5 @@
 NAME	= philo
-CFLAGS	= -Wall -Wextra -Werror
+CFLAGS	= -Wall -Wextra -Werror # -fsanitize=thread
 
 SOURCES	= \
 	args.c \
